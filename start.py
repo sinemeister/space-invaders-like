@@ -11,10 +11,6 @@ pygame.display.set_caption("Space Invaders Like")
 BG_IMAGE = pygame.transform.scale(pygame.image.load("images\\space.webp"), (WIDTH, HEIGHT))
 ARROW_IMAGE = pygame.transform.scale(pygame.image.load("images\\arrow.png"), (50, 50))
 
-GAME_LOOP_MUSIC = pygame.mixer.Sound("sounds\\game_music.mp3")
-GAME_LOOP_MUSIC.set_volume(0.5)
-GAME_LOOP_MUSIC.play(loops=-1)
-
 TITLE_FONT = pygame.font.SysFont("Courier", 60, "bold")
 PLAY_FONT = pygame.font.SysFont("Courier", 36, "bold")
 ABOUT_FONT = pygame.font.SysFont("Courier", 36, "bold")

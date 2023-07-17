@@ -20,6 +20,9 @@ LIVES_BOX_IMAGE = pygame.transform.scale(pygame.image.load("images\\lives.png"),
 HIGHSCORE_IMAGE = pygame.transform.scale(pygame.image.load("images\\highscore.png"), (30, 30))
 SCORE_IMAGE = pygame.transform.scale(pygame.image.load("images\\score.png"), (30, 30))
 
+GAME_LOOP_MUSIC = pygame.mixer.Sound("sounds\\game_music.mp3")
+GAME_LOOP_MUSIC.set_volume(0.5)
+GAME_LOOP_MUSIC.play(loops=-1)
 SHOOT_SOUND = pygame.mixer.Sound("sounds\\shoot.mp3")
 ALIEN_HIT_SOUND = pygame.mixer.Sound("sounds\\alien_hit.mp3")
 SPACESHIP_HIT_SOUND = pygame.mixer.Sound("sounds\\spaceship_hit.mp3")
@@ -220,12 +223,13 @@ def generate_aliens(aliens):
 
 
 def game_over(game_over_text):
-    start.GAME_LOOP_MUSIC.stop()
+    GAME_LOOP_MUSIC.stop()
     GAME_END_SOUND.play()
     text = GAME_OVER_FONT.render(game_over_text, 1, (255, 255, 255))
     win.blit(text, (WIDTH / 2 - text.get_width() / 2, HEIGHT / 2 - text.get_height() / 2))
     pygame.display.update()
     pygame.time.delay(3500)
+    GAME_LOOP_MUSIC.play(loops=-1)
 
 
 def pause(paused_text):
