@@ -7,10 +7,10 @@
 
 Space Invaders Like is derived from the famous arcade shooter Space Invaders. The player is to control a spaceship which equipped with lasers, and can move within the window borders. Aliens are coming down randomly and the player aims to kill as many aliens as they can and earn points.
 
-<img src="https://imgur.com/BtwGaj5" width="300" height="240"/>
-<img src="https://imgur.com/GYLV5s2" width="300" height="240"/>
-<img src="https://imgur.com/ODqSjtf" width="300" height="240"/>
-<img src="https://imgur.com/x2AJyQi" width="300" height="240"/>
+<img src="https://i.imgur.com/BtwGaj5.png" width="300" height="240"/>
+<img src="https://i.imgur.com/GYLV5s2.png" width="300" height="240"/>
+<img src="https://i.imgur.com/ODqSjtf.png" width="300" height="240"/>
+<img src="https://i.imgur.com/x2AJyQi.png" width="300" height="240"/>
 
 ## Instructions
 
