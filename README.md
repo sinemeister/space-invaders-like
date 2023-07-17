@@ -23,6 +23,8 @@ Highscore is also recorded.
 
 More instructions can be found in HELP in start menu. Navigate in start menu with ARROW KEYS and SPACE. Use RETURN (ENTER) to get back to start menu when in HELP and ABOUT.
 
+<img src="https://i.imgur.com/WeKfAXb.png" width="300" height="240"/>
+
 ## How To Play
 
 - Make sure that all the files are in the same folder.
