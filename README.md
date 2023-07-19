@@ -17,7 +17,9 @@ Space Invaders Like is derived from the famous arcade shooter Space Invaders. Th
 
 On some predefined occasions, power ups come down to enable users' mega laser beam to kill all the aliens on the screen. In case that player is short of lives, hearts come down as well. It has no effect if the player has full lives, which is 5.
 
-Should user wants to pause or restart the game, they are allowed to do so with ESC and R, respectively. If user wants to read the instructions in the help window, they can press F1 while playing, and pick the game up from where they left off with the same key. Should user wants to return to start menu, they can press DEL key.
+Should the player wants to pause or restart the game, they are allowed to do so with ESC and R, respectively. If player wants to read the instructions in the help window, they can press F1 while playing, and pick the game up from where they left off with the same key. Should player wants to return to start menu, they can press DEL key.
+
+Player can mute/unmute the game with M.
 
 Highscore is also recorded.
 

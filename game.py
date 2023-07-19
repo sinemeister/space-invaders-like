@@ -15,7 +15,7 @@ class Spaceship:
                                 SPACESHIP.get_width(), SPACESHIP.get_height())
         self.spaceship_hit = False
 
-    def move(self, keys_pressed, aliens, features):
+    def move(self, keys_pressed, aliens, features, muted):
         if keys_pressed[pygame.K_LEFT] and self.rect.x - SPACESHIP_VEL > 0:
             self.rect.x -= SPACESHIP_VEL
         if keys_pressed[pygame.K_RIGHT] and self.rect.x + SPACESHIP_VEL + self.rect.width < WIDTH:
@@ -29,20 +29,24 @@ class Spaceship:
             if self.rect.colliderect(alien) and not self.spaceship_hit:
                 aliens.aliens.remove(alien)
                 pygame.event.post(pygame.event.Event(SPACESHIP_HIT))
-                SPACESHIP_HIT_SOUND.play()
+                if not muted:
+                    SPACESHIP_HIT_SOUND.play()
     
         for pwup in features.powerups:
             if self.rect.colliderect(pwup):
                 pygame.event.post(pygame.event.Event(POWERUP))
                 pwup.x = 5000
                 pwup.y = 5000
-                POWERUP_SOUND.play()
+                if not muted:
+                    POWERUP_SOUND.play()
 
         for life in features.lives:
             if self.rect.colliderect(life):
                 pygame.event.post(pygame.event.Event(GOT_LIVE))
                 features.lives.remove(life)
-                LIFE_SOUND.play()
+                if not muted:
+                 LIFE_SOUND.play()
+
 
 class Aliens:
     def __init__(self):
@@ -69,13 +73,14 @@ class Bullets:
         self.bullets = []
         self.laser_beam = pygame.Rect(1500, 1500, 10, 100)
 
-    def generate(self, spaceship):
+    def generate(self, spaceship, muted):
         bullet = pygame.Rect(spaceship.rect.x + spaceship.rect.width/2 - 2.5, spaceship.rect.y - 25, 5, 25)
         self.bullets.append(bullet)
-        SHOOT_SOUND.set_volume(0.3)
-        SHOOT_SOUND.play()
+        if not muted:
+            SHOOT_SOUND.set_volume(0.3)
+            SHOOT_SOUND.play()
 
-    def move(self, aliens):
+    def move(self, aliens, muted):
         for bullet in self.bullets:
             bullet.y -= BULLET_VEL
             if bullet.y <= 0:
@@ -90,8 +95,9 @@ class Bullets:
                         aliens.aliens.remove(alien)
                     except ValueError:
                         pass
-                    ALIEN_HIT_SOUND.set_volume(0.3)
-                    ALIEN_HIT_SOUND.play()
+                    if not muted:
+                        ALIEN_HIT_SOUND.set_volume(0.3)
+                        ALIEN_HIT_SOUND.play()
 
     def move_laser_beam(self):
         if self.laser_beam.y + self.laser_beam.height >= 0:
@@ -142,7 +148,7 @@ class GameFeatures:
 
         return self.powerups
     
-    def power_up_use(self, keys_pressed, aliens, spaceship, bullets):
+    def power_up_use(self, keys_pressed, aliens, spaceship, bullets, muted):
         if keys_pressed[pygame.K_LCTRL] and self.powerup_count > 0 or keys_pressed[pygame.K_RCTRL] and self.powerup_count > 0:
             for alien in aliens.aliens[:]:
                 aliens.aliens.remove(alien)
@@ -154,15 +160,16 @@ class GameFeatures:
             bullets.laser_beam = pygame.Rect(spaceship.rect.x + spaceship.rect.width/2 - 10, 0, 20, spaceship.rect.y)
             bullets.move_laser_beam()
 
-            LASER_BEAM_SOUND.set_volume(0.5)
-            LASER_BEAM_SOUND.play()
+            if not muted:
+                LASER_BEAM_SOUND.set_volume(0.5)
+                LASER_BEAM_SOUND.play()
 
             self.powerup_count = 0
 
         return self.powerups, self.powerup_count, aliens, self.score
-    
 
-def draw_game(spaceship, aliens, bullets, features, HIGHSCORE, hit_start_time):
+
+def draw_game(spaceship, aliens, bullets, features, HIGHSCORE, hit_start_time, muted):
     win.blit(BG_IMAGE, (0, 0))
     if spaceship.spaceship_hit:
         elapsed_time = pygame.time.get_ticks() - hit_start_time
@@ -198,20 +205,31 @@ def draw_game(spaceship, aliens, bullets, features, HIGHSCORE, hit_start_time):
         win.blit(LIVES_IMAGE, (life.x, life.y))
     del_text = HELP_FONT.render("DEL MENU", 1, (255, 255, 255))
     win.blit(del_text, (WIDTH - del_text.get_width() - 10, help_text.get_height() + 20))
+    if muted:
+        mute_text = MUTE_FONT.render("M UNMUTE", 1, (255, 255, 255))
+        win.blit(mute_text, (WIDTH - mute_text.get_width() - 10, help_text.get_height() + del_text.get_height() + 30))
+        win.blit(MUTE_IMAGE, (WIDTH - mute_text.get_width() - MUTE_IMAGE.get_width(), help_text.get_height() + del_text.get_height() + 10))
+    if not muted:
+        unmute_text = MUTE_FONT.render("M MUTE", 1, (255, 255, 255))
+        win.blit(unmute_text, (WIDTH - unmute_text.get_width() - 10, help_text.get_height() + del_text.get_height() + 30))
+        win.blit(UNMUTE_IMAGE, (WIDTH - unmute_text.get_width() - MUTE_IMAGE.get_width(), help_text.get_height() + del_text.get_height() + 10))
+
     
     pygame.display.update()
 
     return spaceship.spaceship_hit
 
 
-def game_over(game_over_text):
-    GAME_LOOP_MUSIC.stop()
-    GAME_END_SOUND.play()
+def game_over(game_over_text, muted):
+    if not muted:
+        GAME_LOOP_MUSIC.stop()
+        GAME_END_SOUND.play()
     text = GAME_OVER_FONT.render(game_over_text, 1, (255, 255, 255))
     win.blit(text, (WIDTH / 2 - text.get_width() / 2, HEIGHT / 2 - text.get_height() / 2))
     pygame.display.update()
     pygame.time.delay(3500)
-    GAME_LOOP_MUSIC.play(loops=-1)
+    if not muted:
+        GAME_LOOP_MUSIC.play(loops=-1)
 
 
 def pause(paused_text):
@@ -228,6 +246,7 @@ def main():
     bullets = Bullets()
     features = GameFeatures()
     paused = False
+    muted = False
     show_help = False
     hit_start_time = 0
 
@@ -240,7 +259,7 @@ def main():
             if features.score > int(HIGHSCORE):
                 with open("highscore.txt", mode="w") as file:
                     file.write(str(features.score))
-            game_over(game_over_text)
+            game_over(game_over_text, muted)
             start.main()
 
         for event in pygame.event.get():
@@ -253,7 +272,7 @@ def main():
             if event.type == pygame.KEYDOWN:
 
                 if event.key == pygame.K_SPACE:
-                    bullets.generate(spaceship) 
+                    bullets.generate(spaceship, muted) 
                 
                 paused_text = ""
                 if event.key == pygame.K_ESCAPE:
@@ -281,6 +300,19 @@ def main():
                 if event.key == pygame.K_r:
                     main()
 
+                if event.key == pygame.K_m:
+                    if not muted:
+                        for sound in SOUNDS:
+                            sound.set_volume(0.0)
+                            muted = True
+                    elif muted:
+                        for sound in SOUNDS:
+                            if sound != GAME_LOOP_MUSIC:
+                                sound.set_volume(0.3)
+                            else:
+                                sound.set_volume(0.4)
+                        muted = False
+
             if event.type == SPACESHIP_HIT:
                 features.lives_count -= 1
                 spaceship.spaceship_hit = True
@@ -298,19 +330,19 @@ def main():
         keys_pressed = pygame.key.get_pressed()
         
         if not paused and not show_help:
-            spaceship.move(keys_pressed, aliens, features)
+            spaceship.move(keys_pressed, aliens, features, muted)
             aliens.generate()
             aliens.move()
-            bullets.move(aliens)
+            bullets.move(aliens, muted)
             bullets.move_laser_beam()
             features.generate_lives()
             features.move_lives()
             features.generate_power_up()
             features.move_power_up()
             features.powerups, features.powerup_count, aliens, features.score = features.power_up_use(keys_pressed, 
-            aliens, spaceship, bullets)
+            aliens, spaceship, bullets, muted)
             
-            spaceship.spaceship_hit = draw_game(spaceship, aliens, bullets, features, HIGHSCORE, hit_start_time)
+            spaceship.spaceship_hit = draw_game(spaceship, aliens, bullets, features, HIGHSCORE, hit_start_time, muted)
 
     pygame.quit()
 

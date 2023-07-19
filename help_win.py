@@ -29,6 +29,7 @@ HELP_TEXT = [
     ("Press DEL to turn back to start menu when playing.", None),
     ("Restart the game with R.", None),
     ("Toggle HELP on/off with F1 when playing.", None),
+    ("Mute/unmute with M.", None),
     ("", None),
     ("Additional instructions:", None),
     ("Collect power ups to shoot mega laser beam to kill all the aliens on the screen with LCTRL or RCTRL", PWUP_ICON),
@@ -66,7 +67,7 @@ def draw(back, arrow):
         else:
             text = HELP_FONT.render(line, 1, "white")
             win.blit(text, (10, y))
-            y += 30
+            y += 27
 
     win.blit(ARROW_IMAGE, (arrow.x, arrow.y))
     back_text = BACK_FONT.render(back, 1, "white")

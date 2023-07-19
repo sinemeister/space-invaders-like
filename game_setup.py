@@ -14,6 +14,8 @@ LIVES_IMAGE = pygame.transform.scale(pygame.image.load("images\\lives.png"), (50
 LIVES_BOX_IMAGE = pygame.transform.scale(pygame.image.load("images\\lives.png"), (30, 30))
 HIGHSCORE_IMAGE = pygame.transform.scale(pygame.image.load("images\\highscore.png"), (30, 30))
 SCORE_IMAGE = pygame.transform.scale(pygame.image.load("images\\score.png"), (30, 30))
+MUTE_IMAGE = pygame.transform.scale(pygame.image.load("images\\mute.png"), (60, 60))
+UNMUTE_IMAGE = pygame.transform.scale(pygame.image.load("images\\unmute.png"), (60, 60))
 
 GAME_LOOP_MUSIC = pygame.mixer.Sound("sounds\\game_music.mp3")
 GAME_LOOP_MUSIC.set_volume(0.5)
@@ -25,6 +27,8 @@ GAME_END_SOUND = pygame.mixer.Sound("sounds\\end.mp3")
 LASER_BEAM_SOUND = pygame.mixer.Sound("sounds\\laser_beam.mp3")
 LIFE_SOUND = pygame.mixer.Sound("sounds\\life.mp3")
 POWERUP_SOUND = pygame.mixer.Sound("sounds\\powerup.mp3")
+
+SOUNDS = [GAME_LOOP_MUSIC, SHOOT_SOUND, ALIEN_HIT_SOUND, SPACESHIP_HIT_SOUND, GAME_END_SOUND, LASER_BEAM_SOUND, LIFE_SOUND, POWERUP_SOUND]
 
 SPACESHIP_VEL = 5
 ALIEN_VEL = 2.5
@@ -41,6 +45,7 @@ POWER_UP_FONT = pygame.font.SysFont("Courier", 18, "bold")
 LIVES_FONT = pygame.font.SysFont("Courier", 18, "bold")
 HELP_FONT = pygame.font.SysFont("Courier", 18, "bold")
 PAUSE_FONT = pygame.font.SysFont("Courier", 60, "bold")
+MUTE_FONT = pygame.font.SysFont("Courier", 18, "bold")
 
 SPACESHIP_HIT = pygame.USEREVENT + 1
 ALIEN_HIT = pygame.USEREVENT + 2
